@@ -37,7 +37,10 @@ class ViewController: UIViewController {
         request.add(value: "10003", key: "appkey")
         request.add(value: "b59bc3ef6191eb9f747dd4e83c99f2a4", key: "sign")
         request.add(value: "json", key: "format")
-
+        request.currentProgress = {
+            pro in
+            print("当前的进度：\(pro)")
+        }
         request.loadJsonStringFinished { result, error in
             self.model = JSONDecoder.jsonDecoder(WeatherModel.self, fromAny: result)
             self.mainTable.reloadData()

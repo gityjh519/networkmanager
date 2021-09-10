@@ -146,6 +146,16 @@ extension TaskRequestOperation: URLSessionDataDelegate {
         }
     }
     
+    func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+        guard let pro = progress else {
+            return
+        }
+        let p = Float(totalBytesSent/totalBytesExpectedToSend)
+        memeryProgress = p
+        DispatchQueue.mainQueue {
+            pro(p)
+        }
+    }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         

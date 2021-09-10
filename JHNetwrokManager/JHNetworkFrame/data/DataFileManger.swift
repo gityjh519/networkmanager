@@ -25,6 +25,7 @@ class DataFileManger {
     
     //    创建的路径：libraryPath documentPath 两种
     private var path : String!
+    static private let excpetDate = Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
     
     static var shareInstance: DataFileManger {
         DataFileManger(libraryPath: "defult.image.caches")
@@ -176,19 +177,16 @@ extension DataFileManger {
 
 extension DataFileManger {
     
+    // 这个需要手动调用 finishedBlock回传一个缓存大小 返回一个确定删除所有的缓存回调
     static func clearCahesData(finishedBlock:((_ strl: String) -> Void)? = nil) -> (() -> ()) {
         
         
-        let libraryPath = DataFileManger.init(libraryPath: "").path ?? "";
-        
-        var listPath = [libraryPath];
-        
+        let libraryPath = DataFileManger.init(libraryPath: "defult.image.caches").path ?? "";
+                
         var maxSize: Double = 0
-        let removePaths = listPath.reduce([URL]()) { 
-            $0 + getPathsBy(rootPath: $1, size: &maxSize)
-        }
-    
         
+        let removePaths = getPathsBy(rootPath: libraryPath, size: &maxSize);
+    
         finishedBlock?(caculateSize(cachesSize: maxSize));
         
         func removeFile() {

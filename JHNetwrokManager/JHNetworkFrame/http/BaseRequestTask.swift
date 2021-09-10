@@ -109,7 +109,7 @@ extension BaseRequestTask {
     }
     
    
-    private func connectURLRequest(request: URLRequest?,showLoading: Bool = false,progress: Bool = false,finished: @escaping finishedTask){
+    private func connectURLRequest(request: URLRequest?,showLoading: Bool = false,finished: @escaping finishedTask){
         
         guard let requestURL = request else {
             return
@@ -132,10 +132,10 @@ extension BaseRequestTask {
             }
         }
         
-        if progress {
+        if let progress = currentProgress {
             operation.progress = {
-                (pros) -> Void in
-                self.currentProgress?(pros);
+                (p) -> Void in
+                progress(p);
             }
         }
         
