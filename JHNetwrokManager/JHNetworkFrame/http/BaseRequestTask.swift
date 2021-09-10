@@ -20,7 +20,7 @@ class BaseRequestTask {
     
     
     var memeryProgress: Float = 0;
-    var downProgress: proBlock!
+    var currentProgress: proBlock!
     
     
     var httpMethod = HttpMethodType.GET;
@@ -135,7 +135,7 @@ extension BaseRequestTask {
         if progress {
             operation.progress = {
                 (pros) -> Void in
-                self.downProgress?(pros);
+                self.currentProgress?(pros);
             }
         }
         
